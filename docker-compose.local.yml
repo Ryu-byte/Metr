@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  app:
+
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: develop-stage
+    ports:
+      - "9100:9100"
+    command: /bin/sh -c "yarn && quasar dev"

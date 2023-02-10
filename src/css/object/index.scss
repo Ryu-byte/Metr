@@ -1,0 +1,44 @@
+.object {
+  &__info {
+    .tittle {
+      margin-bottom: 20px;
+    }
+  }
+  .tabs {
+    margin-top: 30px;
+  }
+
+  .inputFile + label {
+    padding: 11px 100px 11px 83px;
+  }
+
+  .col-md-4.flex.justify-end {
+    height: 60px;
+  }
+  p {
+    max-width: 168px;
+    overflow-wrap: break-word;
+    color: #545E79;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .q-item.q-item-type.row.no-wrap.justify-between.items-center {
+    padding: 0;
+  }
+  .q-list {
+    width: 321px;
+  }
+  .q-btn:not(:last-child) {
+    padding: 0 10px 0 0;
+  }
+  .q-btn:last-child {
+    padding: 0;
+  }
+  .q-item__section--side {
+    padding: 0;
+    flex-direction: row;
+  }
+}
+

@@ -1,0 +1,9 @@
+.q-editor__content:empty:not(:focus):before {
+  white-space: pre;
+}
+.editor {
+  padding: 10px 0 8px 20px;
+  font-size: 11px;
+  line-height: 13px;
+  border-radius: 6px;
+}

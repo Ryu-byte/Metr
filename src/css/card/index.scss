@@ -1,0 +1,45 @@
+.card {
+  &__company {
+    width: 100%;
+    max-width: 250px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid $link;
+    color: $link;
+    box-shadow: none;
+    margin-bottom: 20px;
+    font-size: 14px;
+
+    .active {
+      background-color: $link;
+      color: white;
+    }
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    border-radius: 5px;
+    color: #5584FF;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+
+
+  }
+
+  &__menu {
+    background: $link;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}
+
+.text-active {
+  color: white;
+}

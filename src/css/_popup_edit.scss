@@ -1,0 +1,26 @@
+.popup_edit {
+  padding: 25px 20px 28px 20px;
+  .q-dialog__title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    color: #3E424F;
+    margin: 0 0 7px 0;
+  }
+  .q-input {
+    background: #FBFBFB;
+    border: 1px solid #EEEEEE;
+    border-radius: 6px;
+  }
+  .q-field__native, .q-field__input, .q-field__control, .q-input {
+    width: 180px;
+    height: 32px;
+    padding-left: 2px;
+    margin-right: 15px;
+  }
+  .q-field--standard .q-field__control:before {
+    border-bottom: none;
+    transition: none;
+  }
+}

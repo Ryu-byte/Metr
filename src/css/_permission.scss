@@ -1,0 +1,35 @@
+.company__permission {
+  border: 1px solid #EEEEEE;
+  border-radius: 6px;
+  .title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #545E79;
+  }
+  .subtitle {
+    font-weight: 500;
+    font-size: 12px;
+    line-height:14px;
+  }
+  &--top {
+    padding: 18px 20px;
+  }
+  &--item {
+    margin: 15px 27px;
+  }
+  &--subitem {
+    margin: 0 23px 0 20px;
+    padding: 6px 0 10px 7px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    color: #626671;
+  }
+  &--subitem:nth-child(odd) {
+    background: rgba(85, 132, 255, 0.04);
+    border-radius: 6px;
+  }
+}

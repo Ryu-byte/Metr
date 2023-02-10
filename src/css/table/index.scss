@@ -1,0 +1,77 @@
+.table {
+  border: 1px solid #E0E3ED;
+  border-radius: 6px;
+  box-shadow: none;
+
+  td {
+    font-size: 14px !important;
+    font-weight: 400;
+    line-height: 14px;
+    padding: 10px;
+  }
+
+  th {
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px;
+  }
+
+  .q-table > tbody > tr:hover {
+    background-color: rgba(0, 0, 0, .015);
+  }
+
+  .status__true {
+    color: green;
+  }
+
+  .status__false {
+    color: red;
+  }
+
+  .q-table__bottom {
+    padding: 0 14px 4px 0;
+  }
+
+  .actual_info {
+    text-decoration-line: underline;
+    color: #5584FF;
+  }
+
+  &__header {
+    background: white;
+    color: #5584FF;
+
+    .recalculation {
+      th {
+        white-space: unset;
+      }
+    }
+
+    .q-checkbox__inner {
+      &--falsy {
+        .q-checkbox__bg.absolute {
+          border: 4px solid #ffff;
+          background: white;
+        }
+      }
+    }
+  }
+
+  &.formula {
+    td {
+      white-space: pre-wrap;
+    }
+  }
+
+  &.object_accounts {
+    td {
+      white-space: break-spaces;
+    }
+  }
+}
+
+th{
+  font-size: 16px;
+}

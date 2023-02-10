@@ -1,0 +1,29 @@
+.searchbar {
+  &__input{
+    border: 1px solid #E4E4E4;
+    border-radius: 6px;
+   }
+  input {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 13px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+  }
+  ::placeholder {
+    color: #B6B6B6;
+  }
+  .q-field__control.relative-position.row.no-wrap {
+    height: 42px;
+  }
+  .q-field__append.q-field__marginal.row.no-wrap.items-center {
+    height: 42px;
+  }
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}

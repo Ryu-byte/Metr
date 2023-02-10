@@ -1,0 +1,339 @@
+<template>
+  <div class="component_container object">
+    <div class="forms">
+      <main>
+        <div class="tittle q-mb-lg">Редактировать документ</div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-6 q-pr-md">
+                <TextInput
+                  name="name_document"
+                  v-model="form.name_document"
+                  placeholder="Укажите название документа"
+                  type="text"
+                  label="Название документа"
+                  :success-message="v$.name_document"
+                />
+              </div>
+              <div class="col-md-6 q-pl-md q-pr-md">
+                <SelectMultiple
+                  title="Тип документа"
+                  name="type_document"
+                  :model-option="type_document_options"
+                  v-model="form.type_document"
+                  class=""
+                  label="Выберите тип документа"
+                  :success-message="v$.type"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 q-pr-md">
+                <TextInput
+                  label="Номер: "
+                  name="number_document"
+                  v-model="form.number_document"
+                  placeholder="Номер документа"
+                  type="text"
+                  :success-message="v$.number_document"
+                />
+              </div>
+              <div class="col-md-6 q-pl-md q-pr-md">
+                <TextInput
+                  label="Наименование выдавшего органа:"
+                  name="government"
+                  type="text"
+                  v-model="form.government"
+                  placeholder="Укажите наименование выдавшего органа"
+                  :success-message="v$.government"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 q-pr-md">
+                <DateInput
+                  title="дд.мм.гггг"
+                  :is-range="false"
+                  name="date"
+                  label="Дата заключения договора:"
+                  style-date="input_date"
+                  dense="dense"
+                  v-model="form.date_conclusion"
+                  v-maska="'##.##.####'"
+                  :success-message="v$.date_conclusion"
+                />
+              </div>
+              <div class="col-md-6 q-pl-md q-pr-md">
+                <DateInput
+                  title="дд.мм.гггг"
+                  :is-range="false"
+                  name="date"
+                  label="Дата расторжения договора:"
+                  style-date="input_date"
+                  dense="dense"
+                  v-model="form.date_termination"
+                  v-maska="'##.##.####'"
+                  :success-message="v$.date_termination"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 q-pl-md">
+            <div class="row">
+              <div class="col-12">
+                <SelectMultiple
+                  title="Статус документа:"
+                  name="status_document"
+                  :model-option="status_document_options"
+                  v-model="form.status_document"
+                  label="Выберите статус документа"
+                  :success-message="v$.status_document"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <TextInput
+                  label="Документ:"
+                  name="document"
+                  type="file"
+                  @change="uploadFile"
+                  v-model="form.files"
+                  style-date="inputFile"
+                  placeholder="Документ"
+                  load-icon="img:svg/add_2.svg"
+                  load-string="Загрузить документ"
+                />
+                <q-list
+                  class="q-my-xs"
+                  v-for="(file, index) in fileInfos"
+                  :key="index"
+                >
+                  <q-item class="justify-between items-center" v-ripple>
+                    <p>{{ file.file_name }}<br>{{ file.size }}</p>
+                    <q-item-section clickable avatar>
+                      <q-btn
+                        icon="img:svg/document-download_blue.svg"
+                        :href="file.path"
+                        :target="file.file_name"
+                      />
+                      <q-btn
+                        icon="img:svg/trash_blue.svg"
+                        @click="deleteFile(index)"
+                      />
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <q-btn
+              @click="send"
+              no-caps
+              size="14px"
+              label="Сохранить"
+              class="btn btn__save btn__continue btn__margin"
+            />
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent, onMounted, reactive, ref } from "vue";
+import { useStore } from "vuex";
+import { useQuasar } from "quasar";
+import SelectMultiple from "components/ui/SelectMultiple/SelectMultiple";
+import TextInput from "components/ui/input/TextInput";
+import DateInput from "components/ui/DateInput/DateInput";
+import {
+  formatUnixDateTime, getEnumOptions,
+  toUnixFormat,
+} from "src/lib/helpers";
+import { cloneDeep, forEach } from "lodash";
+import useVuelidate from "@vuelidate/core";
+import {
+  DocumentHouseForm,
+  DocumentHouseRules,
+} from "src/setup/Object/Documnet";
+import { maska } from "maska";
+import TypeDocumentCompany from "src/Enum/TypeDocumentCompany";
+import {useRoute} from "vue-router/dist/vue-router";
+import {useRouter} from "vue-router";
+
+export default defineComponent({
+  name: "EditDocumentCompany",
+  components: { SelectMultiple, TextInput, DateInput },
+  directives: { maska },
+  setup: function () {
+    const store = useStore();
+    const $q = useQuasar();
+    let formData = new FormData();
+    const route = useRoute();
+    const router = useRouter();
+    const form = reactive(cloneDeep(DocumentHouseForm));
+    let fileInfos = ref([]);
+    const v$ = useVuelidate(DocumentHouseRules, form);
+    const type_document_options = TypeDocumentCompany;
+    const status_document_options = getEnumOptions("getDocumentStatus");
+    async function deleteFile(index, id) {
+      if (id == undefined) {
+        fileInfos.value.splice(index, 1);
+      } else {
+        $q.loading.show({
+          delay: 0,
+          message: "Удаление документа",
+        });
+        await store.dispatch("document/DeleteDocumentCompanyFile", id);
+
+        fileInfos.value = [];
+        $q.loading.hide();
+        await loadData();
+      }
+    }
+
+    onMounted(async () => {
+      $q.loading.show({ delay: 400 });
+      await loadData();
+      $q.loading.hide();
+    });
+    async function loadData() {
+      try {
+        await store.dispatch(
+          "document/CompanyDocSingle",
+          route.params.item
+        );
+        let data = store.getters["document/getDocumentCompany"];
+        if (data) {
+          for (let key in data) {
+            if (key.indexOf("date") === 0) {
+              form[key] = formatUnixDateTime(data[key]);
+            } else if (key === "files") {
+              if (data[key].length > 0) {
+                forEach(data.files, (file) => {
+                  fileInfos.value.push({
+                    file_name: file.file_name,
+                    path: file.path,
+                    id: file.id,
+                  });
+                });
+              }
+            } else {
+              form[key] = data[key];
+            }
+          }
+        }
+      } catch (e) {
+        $q.loading.hide();
+        let message = null;
+        message = e.message;
+        if (e.response !== undefined) {
+          forEach(e.response.data.errors, function (item) {
+            message = item;
+          });
+        }
+        $q.notify({
+          color: "negative",
+          message: message,
+          icon: "warning",
+          position: "top-right",
+        });
+      }
+    }
+
+    async function send() {
+      v$.value.$validate();
+      try {
+        if (v$.value.$invalid) {
+          throw new Error("Не все поля заполнены");
+        }
+        if (form.date_conclusion != "" && form.date_conclusion != null) {
+          form.date_conclusion = toUnixFormat(form.date_conclusion);
+        } else {
+          form.date_conclusion = "";
+        }
+        if (form.date_termination != "" && form.date_termination != null) {
+          form.date_termination = toUnixFormat(form.date_termination);
+        } else {
+          form.date_termination = "";
+        }
+        delete form.files;
+        for (let key in form) {
+          formData.append(key, form[key]);
+        }
+        $q.loading.show({ delay: 0, message: "Сохранение" });
+        await store.dispatch("document/UpdateDocument", formData);
+        let res = store.getters["document/getDocumentCompany"];
+        if (res) {
+          $q.notify({
+            color: "positive",
+            message: res.message,
+            icon: "done",
+            position: "top-right",
+          });
+          $q.loading.hide();
+          await router.push(`/company/single=${route.params.id}/documents`)
+        }
+      } catch (e) {
+        $q.loading.hide();
+        formData = new FormData();
+        let message = null;
+        message = e.message;
+        if (e.response !== undefined) {
+          forEach(e.response.data.errors, function (item) {
+            message = item;
+          });
+        }
+        $q.notify({
+          color: "negative",
+          message: message,
+          icon: "warning",
+          position: "top-right",
+        });
+      }
+    }
+
+    const uploadFile = (e) => {
+      if (fileInfos.value.length < 3) {
+        if (e.target.files.length > 0) {
+          for (const i of Object.keys(e.target.files)) {
+            let _size = e.target.files[i].size;
+            let fSExt = new Array("Байт", "Кб", "Мб", "Гб"),
+              j = 0;
+            while (_size > 900) {
+              _size /= 1024;
+              j++;
+            }
+            let exactSize = Math.round(_size * 100) / 100 + " " + fSExt[j];
+            formData.append(`files[${i}]`, e.target.files[i]);
+            fileInfos.value.push({
+              file_name: e.target.files[i].name,
+              path: URL.createObjectURL(e.target.files[i]),
+              size: exactSize,
+            });
+          }
+        }
+      } else {
+        fileInfos = [];
+      }
+    };
+    return {
+      send,
+      form,
+      type_document_options,
+      status_document_options,
+      fileInfos,
+      uploadFile,
+      v$,
+      deleteFile,
+    };
+  },
+});
+</script>

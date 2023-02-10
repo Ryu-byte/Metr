@@ -1,0 +1,36 @@
+.document_preview {
+  div:first-child {
+    z-index: 2;
+  }
+  div:last-child {
+    z-index: 1;
+    position: relative;
+    top: 71px;
+    left: -105px;
+  }
+    .document {
+      border: 0.513013px solid #000000;
+      width: 298px;
+      height: 408px;
+    }
+    .zoom {
+      position: absolute;
+      width: 59px;
+      height: 59px;
+    }
+}
+.document_preview_modal {
+  background-color: transparent;
+  box-shadow: none;
+  color: black;
+  border-radius: 0;
+  .document {
+    border: 1.98019px solid #545E79;
+  }
+  .zoom {
+    position: absolute;
+    border: 0;
+    width: 59px;
+    height: 59px;
+  }
+}

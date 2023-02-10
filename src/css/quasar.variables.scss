@@ -1,0 +1,21 @@
+$defaultFontFamily: 'Roboto', sans-serif;
+$defaultFontSize: 16px;
+$defaultFontWeight: 400;
+$min_b: 280px;
+$max_b: 1880px;
+$container: minmax($min_b, $max_b);
+
+
+$link:#5584FF;
+$black:#545E79;
+$fade:#979FB4;
+$primary   : #1976D2;
+$secondary : #26A69A;
+$accent    : #9C27B0;
+
+$dark      : #1D1D1D;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;

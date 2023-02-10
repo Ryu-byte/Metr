@@ -1,0 +1,27 @@
+let accountData = {
+  id: null,
+  address: null,
+  apartment: null,
+  balance_account: null,
+  cadastral_number:null,
+  company_id: null,
+  created_at: null,
+  deleted_at: null,
+  entrance: null,
+  flat_id: null,
+  floor: null,
+  house_id: null,
+  number_of_account: null,
+  resident:null,
+  resident_id: null,
+  residents: null,
+  rooms: null,
+  status_account: true,
+  total_square: null,
+  type_flat: null,
+  type_of_flat: null,
+  type_resident: null,
+  updated_at: null,
+};
+
+export { accountData };

@@ -1,0 +1,50 @@
+import { reactive } from "vue";
+
+export default function () {
+  return {
+    TypeCompany: {},
+    Company: reactive({
+      id: Number(""),
+      company_full_name: "",
+      company_name: "",
+      type: String(""),
+      inn: String(""),
+      kpp: String(""),
+      legal_address: "",
+      actual_address: "",
+      phone: "",
+      site: "",
+    }),
+    CompanyDate: reactive({
+      id: Number(""),
+      number: "",
+      date: "",
+      code: "",
+      government: "",
+      okpo: "",
+      okato: "",
+      oktmo: "",
+      okfs: "",
+      okogu: "",
+      okopf: "",
+      fcc: "",
+      pfr: "",
+      type: "0",
+      type_tax: "",
+    }),
+    CompanyBank: reactive({
+      id: "",
+      bank_name: "",
+      bank_bik: "",
+      bank_correspondent_account: "",
+      bank_account: "",
+    }),
+    TaxType: {},
+    TypeDoc: [],
+    CompanyList: [],
+    TypePartner: {},
+    CompanyClient: {},
+    CompanyClientBank: {},
+    Staff: null,
+  };
+}

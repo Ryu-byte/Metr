@@ -1,0 +1,130 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.modalbackground {
+  position: fixed;
+  inset: 0;
+  background-color: rgba($fade, 0.8);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  box-shadow: $shadow-2;
+  border-radius: 6px;
+  color: black;
+
+
+  &__sm {
+    width: 500px;
+  }
+
+  &__md {
+    width: 625px;
+  }
+
+  &__lg {
+    width: 1200px;
+  }
+
+  &__xs {
+    width: 380px;
+  }
+
+  &__header {
+    position: relative;
+    padding: 35px 35px 35px 45px;
+    border-bottom: 1px solid #EEEEEE;
+
+    h5 {
+      text-align: left;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 26px;
+      margin: 0;
+      color: #545E79;
+    }
+    p {
+      display: block;
+      text-align: center;
+      font-size: 14px;
+      margin: 0;
+      color: #3e424f;
+    }
+    .close_icon {
+      display: block;
+      width: 17px;
+      height: 17px;
+      background-size: 40%;
+      position: absolute;
+      right: 45px;
+      top: 38px;
+      cursor: pointer;
+      background-position: 50%;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .filter__modal__content {
+    .filter.row {
+      margin-bottom: 70px;
+    }
+  }
+
+  .filter__btn {
+    cursor: pointer;
+    box-shadow: none;
+    padding: 0;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 13px;
+    margin-bottom: 18px;
+  }
+
+  .filter__btn.reset {
+    border: 1px solid #F45454;
+    border-radius: 6px;
+    color: #F45454;
+    background-color: white;
+    padding: 9.5px 12px;
+    margin-right: 15px;
+  }
+
+  .filter__btn.apply {
+    border: 1px solid #7AC943;
+    border-radius: 6px;
+    color: #FFF;
+    background: #7AC943;
+    padding: 10px 23.5px;
+  }
+
+
+  &__s {
+    width: 450px;
+
+    .modal__header {
+      position: relative;
+      padding: 60px 35px 35px 35px;
+      border: none;
+    }
+  }
+
+  &__body {
+    padding: 0 45px 2em;
+  }
+
+}

@@ -1,0 +1,22 @@
+.tabs {
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: -0.02em;
+  color: #979FB4;
+  margin: 30px 0 30px 40px;
+
+  .q-tab {
+    margin-right: 24px;
+    padding: 0;
+
+    &__active {
+      color: #5584FF !important;
+      .q-tab__label {
+        font-weight: 500 !important;
+      }
+    }
+    &__label {
+      font-weight: 400;
+    }
+  }
+}

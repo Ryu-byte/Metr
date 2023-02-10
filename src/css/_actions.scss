@@ -1,0 +1,42 @@
+.actions {
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    text-transform: capitalize;
+    content: attr(data-tooltip);
+    position: absolute;
+    width: 53px;
+    border: 1px solid #E0E3ED;
+    border-radius: 0 0 6px 6px;
+    left: 0;
+    top: 0;
+    background: #FFFF;
+    color: #959595;
+    padding: 6px 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.5s;
+  }
+
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    top: 36px;
+  }
+
+  [data-tooltip]:nth-child(4)::after {
+    width: 78px;
+  }
+
+  .q-btn-group {
+    background: #7AC943;
+  }
+
+  .q-btn:not(:last-child) {
+    border-right: 1px solid white;
+  }
+}

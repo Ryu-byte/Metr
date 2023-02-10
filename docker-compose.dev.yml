@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  app:
+    image: $REGISTRY/dev/front:$CI_COMMIT_SHA
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: production-stage-spa
+    restart: always
+    volumes:
+      - ./:/src
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "3000:80"
+volumes:
+  app:

@@ -1,0 +1,41 @@
+$shadow-2: 0 1px 1px rgba(black, 0.15), 0 2px 2px rgba(black, 0.15);
+
+.input{
+
+  &__date{
+    margin: 0 10px;
+    width: 250px;
+  }
+  &__select{
+    margin: 0 10px;
+    width: 300px;
+  }
+}
+
+.forms__no-data {
+  font-size: 13px;
+}
+.q-item{
+  min-height: 38px;
+}
+.q-chip {
+  background: #5584FF;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 4px;
+  .q-icon {
+    margin-left: 4px;
+    margin-right: -4px;
+    width: 8px;
+    height: 8px;
+    filter: brightness(0) invert(1);
+  }
+  &__icon--remove {
+    opacity: 1 !important;
+  }
+}
+.q-chip__content {
+  overflow: hidden;
+  white-space: nowrap;
+}
+

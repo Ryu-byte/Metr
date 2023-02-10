@@ -1,0 +1,58 @@
+stages:
+  - build
+  - deploy
+variables:
+  REGISTRY:  "registry.gitlab.com/team-teleport/metry"
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - echo "Docker login successful"
+
+front_build:
+  stage: build
+  tags:
+    - 'front_build'
+  only:
+    - master
+  script:
+    - docker build --build-arg NODE_ENV="dev" -t "$REGISTRY/dev/front:$CI_COMMIT_SHA" -f ./docker/Dockerfile .
+    - docker push "$REGISTRY/dev/front:$CI_COMMIT_SHA"
+front_build_tst:
+  stage: build
+  tags:
+    - 'front_build_tst'
+  only:
+    - tst
+  script:
+    - docker build --build-arg NODE_ENV="tst" -t "$REGISTRY/tst/front:$CI_COMMIT_SHA" -f ./docker/Dockerfile .
+    - docker push "$REGISTRY/tst/front:$CI_COMMIT_SHA"
+  #when: manual
+
+front_deploy:
+  stage: deploy
+  tags:
+    - 'front_deploy'
+  only:
+    - master
+  script:
+    - export CONTAINER_PREFIX=frontend
+    - docker stop $(docker ps -a | grep ${CONTAINER_PREFIX}_ | awk '{print $1}') || true
+    - docker rm $(docker ps -a | grep ${CONTAINER_PREFIX}_ | awk '{print $1}') || true
+    - docker volume rm $(docker volume ls | grep ${CONTAINER_PREFIX}_ | awk '{print $2}') || true
+    - docker-compose -p $CONTAINER_PREFIX -f docker-compose.dev.yml up -d
+    - docker-compose -p $CONTAINER_PREFIX -f docker-compose.dev.yml ps
+
+front_deploy_tst:
+  stage: deploy
+  tags:
+    - 'front_deploy_tst'
+  only:
+    - tst
+  script:
+    - export CONTAINER_PREFIX=tst_pered
+    - docker stop $(docker ps -a | grep ${CONTAINER_PREFIX}_ | awk '{print $1}') || true
+    - docker rm $(docker ps -a | grep ${CONTAINER_PREFIX}_ | awk '{print $1}') || true
+    - docker volume rm $(docker volume ls | grep ${CONTAINER_PREFIX}_ | awk '{print $2}') || true
+    - docker-compose -p $CONTAINER_PREFIX -f docker-compose.tst.yml up -d
+    - docker-compose -p $CONTAINER_PREFIX -f docker-compose.tst.yml ps
+  #when: manual
